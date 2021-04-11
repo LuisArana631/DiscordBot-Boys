@@ -1,4 +1,5 @@
 /* IMPORTS */
+require('dotenv').config();
 const Discord = require('discord.js');
 const fs = require('fs');
 
@@ -31,4 +32,4 @@ client.on('message', message => {
     }
 });
 
-client.login('ODA3NDUzNzE2MjA2NTgzODQ4.YB4N3w.KE4tKjNPIYKEF7wHXvnVGXbN_OM');
+client.login(process.env.CLIENT_TOKEN);

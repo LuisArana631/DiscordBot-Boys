@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.5.3",
-    "insult": "^0.0.3",
-    "translate": "^0.7.0"
+    "dotenv": "^8.2.0",
+    "insult": "^0.0.3"
   }
 }
