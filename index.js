@@ -13,11 +13,18 @@ for(const file of commandFiles){
 }
 
 /* COMANDOS PREFIJO */
-const prefijo = '-';
+const prefijo = '*';
 
 /* LEVANTAR BOT */
 client.once('ready', () => {
     console.log('BoysBot online!');
+    
+    /* AGREGAR ESTADO */
+    client.user.setPresence({
+        activity: {
+            name: `Use ${prefijo}help for help`
+        }
+    });
 });
 
 /* COMANDOS */
@@ -29,6 +36,8 @@ client.on('message', message => {
 
     if( command === 'puto' ){
         client.commands.get('insultos').execute(message, args);
+    }else if( command === 'help' ){
+        client.commands.get('help').execute(message, args);
     }
 });
 
