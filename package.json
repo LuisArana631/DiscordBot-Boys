@@ -13,6 +13,8 @@
     "discord.js": "^12.5.3",
     "dotenv": "^8.2.0",
     "insult": "^0.0.3",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "opusscript": "0.0.8",
+    "ytdl-core": "^4.5.0"
   }
 }

@@ -9,8 +9,8 @@ module.exports = {
         .setAuthor(message.author.username)
         .setDescription("Informe de los comandos que puedes realizar.")
         .setColor("RANDOM")
-        .addField("Info", '*help - Get some help.')
-        .addField("Fun", '*puto - Free blowjobs.')
+        .addField("Info", '-help - Get some help.')
+        .addField("Fun", '-puto - Free blowjobs.\n-music *link* - play your favorite song!');
 
     message.channel.send(embed);
     }

@@ -2,6 +2,7 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const fs = require('fs');
+const ytdl = require('ytdl-core');
 
 /* CODIGO GENERAL */
 const client = new Discord.Client();
@@ -13,7 +14,10 @@ for(const file of commandFiles){
 }
 
 /* COMANDOS PREFIJO */
-const prefijo = '*';
+const prefijo = '-';
+var servers = {
+
+};
 
 /* LEVANTAR BOT */
 client.once('ready', () => {
@@ -34,11 +38,58 @@ client.on('message', message => {
     const args = message.content.slice(prefijo.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
-    if( command === 'puto' ){
-        client.commands.get('insultos').execute(message, args);
-    }else if( command === 'help' ){
-        client.commands.get('help').execute(message, args);
+    switch (command) {
+        case 'music':
+            function play(connection, message){
+                var server = servers[message.guild.id];
+                server.dispatcher = connection.play(ytdl(server.queue[0], {
+                    filter: "audioonly"
+                }));
+
+                server.queue.shift();
+
+                server.dispatcher.on("end", function(){
+                    if(server.queue[0]){
+                        play(connection, message);
+                    } else {
+                        connection.disconnect();
+                    }
+                });
+            }
+
+            /* VALIDAR QUE VENGA LINK */
+            if (!args[0]){
+                message.channel.send('You need to provide a link');
+                return;  
+            }
+
+            /* VALIDAR QUE SE ENCUENTRE EN UN CANAL */
+            if (!message.member.voice.channel){
+                message.channel.send('You must be in a channel to play some fucking music bro!');
+                return;
+            }
+
+            if (!servers[message.guild.id]) servers[message.guild.id] = {
+                queue: []
+            }
+
+            var server = servers[message.guild.id];
+
+            server.queue.push(args[1]);
+
+            if (!message.guild.voice) message.member.voice.channel.join().then(function(connection){
+                play(connection, message);
+            });
+
+            break;        
+        case 'puto':
+            client.commands.get('insultos').execute(message, args);
+            break;
+        case 'help':
+            client.commands.get('help').execute(message, args);
+            break;
     }
+    
 });
 
 client.login(process.env.CLIENT_TOKEN);
